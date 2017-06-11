@@ -1,0 +1,5 @@
+package: github.com/belimawr/golang-sp-locaweb/floresta
+import:
+- package: github.com/lib/pq
+- package: github.com/gocarina/gocsv
+- package: github.com/jbrukh/bayesian
