@@ -19,9 +19,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	store := store.Store{DB: db}
+	store := store.NewSQLStore(db)
 
 	for _, a := range store.ReadArvores(10) {
 		fmt.Printf("%#v\n", a)
 	}
+
+	fmt.Printf("%#v\n", store.GetRamo("noite"))
 }
