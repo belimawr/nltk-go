@@ -22,13 +22,19 @@ func main() {
 	floresta := store.NewStore(db)
 
 	fmt.Println(`Reading some "Árvores":`)
-	for _, a := range floresta.ReadArvores(10) {
+
+	arvores, err := floresta.ReadArvores(10)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for _, a := range arvores {
 		fmt.Printf("%#v\n", a)
 	}
 
 	fmt.Println("\n\n", `Reading some "Ramos" (palavra="anda"):`)
-	ramos, err := floresta.GetWord("anda")
 
+	ramos, err := floresta.GetWord("anda")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -38,8 +44,8 @@ func main() {
 	}
 
 	fmt.Println("\n\n", `Reading some "Ramos" (lema="andar"):`)
-	lemas, err := floresta.GetLema("andar")
 
+	lemas, err := floresta.GetLema("andar")
 	if err != nil {
 		panic(err.Error())
 	}

@@ -1,5 +1,5 @@
-hash: 1a351f7a6e00444ba28b8c08f1204d2892fcd033825b575466e708977a1b4cce
-updated: 2017-06-11T00:50:43.070792208-03:00
+hash: b8c25d9f4498777e406a62834b0768559b6fe77b9f96eea2b5da63ad1cd725d1
+updated: 2017-07-02T22:32:41.658298333-03:00
 imports:
 - name: github.com/gocarina/gocsv
   version: fe70b80cca0fe417956abdf4565e848132166396
@@ -7,6 +7,6 @@ imports:
   version: bf3f261f9a9c61145c60d47665b0518cc32c774f
 - name: github.com/lib/pq
   version: 8837942c3e09574accbc5f150e2c5e057189cace
-  subpackages:
-  - oid
+- name: gopkg.in/DATA-DOG/go-sqlmock.v1
+  version: b983233bc0bbea4dc6e8ec8c8c923d935765ffec
 testImports: []

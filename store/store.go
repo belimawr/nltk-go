@@ -9,7 +9,7 @@ import (
 
 // Store - Interface to "Floresta Sintática" corpus
 type Store interface {
-	ReadArvores(limit int) []models.Arvores
+	ReadArvores(limit int) ([]models.Arvores, error)
 	GetWord(word string) ([]models.Ramos, error)
 	GetLema(lema string) ([]models.Ramos, error)
 }
@@ -74,7 +74,8 @@ func (s *sqlStore) GetLema(lema string) ([]models.Ramos, error) {
 	rows, err := s.DB.Query("SELECT id, arvore, palavra, lema, funcao, forma, morfo, pai FROM ramos WHERE lema = $1", lema)
 
 	if err != nil {
-		log.Printf("Error querying database: %s", err.Error())
+		log.Printf("Errorr querying database: %s", err.Error())
+		return []models.Ramos{}, err
 	}
 
 	defer rows.Close()
@@ -103,14 +104,22 @@ func (s *sqlStore) GetLema(lema string) ([]models.Ramos, error) {
 		ramos = append(ramos, r)
 	}
 
+	err = rows.Err()
+
+	if err != nil {
+		log.Printf("Error reading database rows: %q", rows.Err())
+		return ramos, rows.Err()
+	}
+
 	return ramos, nil
 }
 
-func (s *sqlStore) ReadArvores(limit int) []models.Arvores {
+func (s *sqlStore) ReadArvores(limit int) ([]models.Arvores, error) {
 	rows, err := s.DB.Query("SELECT id, referencia, n, cad, sec, sem, texto, analise FROM arvores LIMIT $1", limit)
 
 	if err != nil {
 		log.Printf("Error querying database: %s", err.Error())
+		return []models.Arvores{}, err
 	}
 
 	defer rows.Close()
@@ -132,11 +141,18 @@ func (s *sqlStore) ReadArvores(limit int) []models.Arvores {
 
 		if err != nil {
 			log.Printf("Error reading database response: %s", err.Error())
-			break
+			return arvores, err
 		}
 
 		arvores = append(arvores, a)
 	}
 
-	return arvores
+	err = rows.Err()
+
+	if err != nil {
+		log.Printf("Error reading database rows: %q", rows.Err())
+		return arvores, rows.Err()
+	}
+
+	return arvores, nil
 }

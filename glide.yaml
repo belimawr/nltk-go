@@ -3,3 +3,5 @@ import:
 - package: github.com/lib/pq
 - package: github.com/gocarina/gocsv
 - package: github.com/jbrukh/bayesian
+- package: gopkg.in/DATA-DOG/go-sqlmock.v1
+  version: v1.2.0
