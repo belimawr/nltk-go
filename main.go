@@ -19,9 +19,32 @@ func main() {
 		os.Exit(1)
 	}
 
-	store := store.Store{DB: db}
+	floresta := store.NewStore(db)
 
-	for _, a := range store.ReadArvores(10) {
+	fmt.Println(`Reading some "Árvores":`)
+	for _, a := range floresta.ReadArvores(10) {
 		fmt.Printf("%#v\n", a)
+	}
+
+	fmt.Println("\n\n", `Reading some "Ramos" (palavra="anda"):`)
+	ramos, err := floresta.GetWord("anda")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for _, r := range ramos {
+		fmt.Printf("%#v\n", r)
+	}
+
+	fmt.Println("\n\n", `Reading some "Ramos" (lema="andar"):`)
+	lemas, err := floresta.GetLema("andar")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for _, r := range lemas {
+		fmt.Printf("%#v\n", r)
 	}
 }
